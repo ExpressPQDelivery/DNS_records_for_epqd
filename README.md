@@ -1,76 +1,76 @@
-Welcome to the ExpressPQDelivery Project
-==============================
-The Ebox record generator is a DNS record(TXT, TLSA) generator for ExpressPQDelivery Ebox based on OpenSSL.  
+Welcome to the ExpressPQDelivery Project  
+==============================  
+The Ebox record generator is a DNS record(TXT, TLSA) generator for ExpressPQDelivery Ebox based on OpenSSL.   
 
-## Requirements
-1. Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)
+## Requirements  
+1. Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
 
-## How to start(Linux Ubuntu)
-### Generate Certificates and convert the certificate to der format.
+## How to start(Linux Ubuntu)  
+### Generate Certificates and convert the certificate to der format.  
 ```bash
 openssl req -x509 -new -newkey dilithium2 -keyout dil2_priv.key -out dil2_crt.pem -nodes -subj "/CN=test CA" -days 365
 openssl x509 -inform PEM -outform DER -in dil2_crt.pem -out dil2_crt.der
 ```
 
-## 1. Generate TXT records for ExpressPQDelivery
-### generate base files for TXT records
-you should enter the correct number of TXT and TLSA records.  
+## 1. Generate TXT records for ExpressPQDelivery  
+### generate base files for TXT records  
+you should enter the correct number of TXT and TLSA records.   
 dilithium2 = TXT 3, TLSA 4  
 dilithium3 = TXT 5, TLSA 6  
 dilithium5 = TXT 6, TLSA 7  
 falcon512  = TXT 1, TLSA 2  
 falcon1024 = TXT 2, TLSA 4  
-
+  
 (Please refer to our paper for detail)  
 ```bash
 python3 gen_base_txt_record.py
-```
+```  
 You may get ebox-need_for_sign.txt and TXT_EBOX-proto.txt  
 You need to add signature value at TXT_EBOX-proto.txt to use this as Ebox TXT records.  
 
-### generate signature for Ebox 
-we use sha256 hash value to generate signature.
+### generate signature for Ebox  
+we use sha256 hash value to generate signature.  
 ```bash
 openssl sha256 dil2_crt.der
-```
-then, concatate the hash value at ebox-need_for_sign.txt
+```  
+then, concatate the hash value at ebox-need_for_sign.txt  
 
 ```
 Example)
 340020240923103333202509231033330(hash value)  
-```
+```  
 
 Then, generate signature with server's private key.  
 ```bash
 openssl dgst -sha256 -sign dil2_priv.key -out sign.256 ebox-need_for_sign.txt  
-```
-Then, encode signature in base64 format.
+```  
+Then, encode signature in base64 format.  
 ```bash
 openssl base64 -in sign.256 -out base64_signature
-```
-And, split the signature value into an appropriate size and wrap it with " ".
+```  
+And, split the signature value into an appropriate size and wrap it with " ".  
 ```bash
 python3 txt_records_generator.py
-```
-### Basic rule for split TXT records
-Paste the contents of base_output2.txt into TXT_EBOX-proto.txt.  
+```  
+### Basic rule for split TXT records  
+Paste the contents of base_output2.txt into TXT_EBOX-proto.txt.   
 Afterwards, each record chunk is created. The first chunk is divided into 1 chunk of 1151 bytes, and each subsequent chunk is divided into 1 chunks of 1097 bytes.  
 
-## 2. Generate TLSA records for ExpressPQDelivery
+## 2. Generate TLSA records for ExpressPQDelivery  
 
-We use online TLSA record generator for get TLSA record value.
-<https://ssl-tools.net/tlsa-generator> 
-Domain Issued Certificate, use full certificate, No Hash.
-we only need the value except `_443._udp.esplab.io. IN TLSA 2 0 0` 
-save the TLSA value in txt file name like *dil2_tlsa.txt*
+We use online TLSA record generator for get TLSA record value.  
+<https://ssl-tools.net/tlsa-generator>  
+Domain Issued Certificate, use full certificate, No Hash.  
+we only need the value except `_443._udp.esplab.io. IN TLSA 2 0 0`  
+save the TLSA value in txt file name like *dil2_tlsa.txt*  
 ```bash
 python3 tlsa_record_new.py
-```
+```  
 Then, you can get TLSA records appling _Optimized fragmentation_ for _EPQD_ named *TLSA_record_output.txt*.  
 
-## Example records 
+## Example records  
 
-### A. TXT records for ExpressPQDelivery
+### A. TXT records for ExpressPQDelivery  
 ```
 [dil2.ebox-0.esplab.io](http://dil2.ebox-0.esplab.io/). IN TXT   "3" "4" "0" "0" "20240923103333" "20250923103333" "0" "VTX1kN2+gQX3AtBAYr/4gHItDtWD+VcB6WDbbDvwHGZDDFFrk5ip1GHGeKXfY4seHssyBOTcxQw1a8OuzecVW2HIH2/EKdW81gaEoc3w//6cAgnUjaJcZRIRHVZdtB9EQ9qovGaNHjdz7" "Xxv38GOG46lHQROwb8mHTTszdfCHzlSB4uob5TB1OENA8rIuqClZ5koeSuSvM514fyfQ5xPvD1gDDg4HQjOC5iGkZcM1VjW33/9hKXp9zv96sN7IB9RyfckzDTCEWy+VZ+y7Y2h/Y72hh" "Dq3czcLe7DHSO4twgDliXTEDPfkQw4XORfwlQBYNK6e4QdyjY3NA1WFK3DOnQEED+y7KjRki+LrFUIr19TTC48PrgPyvKtwiBFDEG/l3URHBJBwPnzgI23s1ZsFUqOdKDRpJG4hOBl5U+XZFVMXy85/xEoxHkOEctTyRYKgXCyA1fZwxuhAh/G+xWCxc1YGpANH9epQgk4ioj5p3mtl2ky3N2KrlzY98cnRibs8OEJ8EGip1A8Txz0P4P/Ln275nyS8gLysmUMPW99OKx872NajjS4ydXVQR9TgI6iMsiynxrpGRD/kNJDiOMSlI3Ohh3VDWlnjpMaemdreHh7aGnObPAeZ3jVAyBPcr5SckX4DAzRVey9UaDrn+Rj/vKleYBbkWpW" "Bviu8hZD2Ha7Hv37bn+slLvdzBAAWQ8zAk3Dc+3OnLv5zG9zwDL+YLes8elGxlysnPOY8+mlZqckvvnfFMK31YOl9NwI5B4qFGPE+ad318MpOZfrXm3rCH4YOoIIanMYa0A9TfyxPrT8g"
 ;
@@ -80,9 +80,9 @@ Then, you can get TLSA records appling _Optimized fragmentation_ for _EPQD_ name
 
 [dil2.ebox-2.esplab.io](http://dil2.ebox-2.esplab.io/).  IN      TXT     "4gpWDNggpLRZHNuv6AcdfZJZBXSVJKoM7yN1gRtCdkCM3SW1uZYqvcqu7uE/PnD0CFhwhFPb/LlNelbed8E/Fhp4TUxZdltqlHYwbiCsosLXaY0A08InUhiW+15WPfk+mn29voKE2Ow6o" "+zKHrUaegeOodV3CKMy7UrfzbYlLjMzMAVrQbsaxfmh5He/4tBNSRN73Tzhtbr0A3kW+UPdzYbg3CBPnx3/fLmrqc4S6gKRhfYu6erC2ywmrwj/zshXXA63tISUO7yoslqCYhTm7++gzj" "W8nUybv2t2Ah4kBgnAkgCpxddAurnuGrloj3e/HbMqul2ONtUajTckP9DqqVpKzjK5JH7f0cCEXcBpJoWL7ZG1kHoD4PE2LQmFVZwQRPgBZ2B29InAJ+hADVQRr+Di+NmjzF15xwIVf2H" "IgFSPqJi6RmDkiZn9SvZvRJSUDwPqXn/t31ki2c3/mkn+KgX+ZKRkhRhZyzqFKCRcR+U3VvfsOAQVsJpEybJZ0jpMHnzIYZqo26YVfpf4/KOoSVFAkiPicx7lRgEFZAG3SRB1LLS3vqDa" "8W8mKsQSzD8f8g4WO2Pc4E/CtvGAGRswUyGVpa03qT6wvr4IA+Oy57gmMlJ+98zn8Eeg5nBCWCegXj2NGloClGNB0EN599EgQDJEauKMD/tQTfftZg/bUKn8+KJezHrAXzTWbEBfN0mV/RaObQF9tlEdW/gtMf6sGCBYbKSw3PT53fY2UmMDDxszuHDpMXmBoapeqrq/E1Nnu9/wTHTU5PEJgdYqrrdnl+gEDBg4WQ1JZXICUp6jV3ePt8AAAAAAAAAAAAAAA
 ;
-```
+```  
 
-### B. TLSA records for ExpressPQDelivery  
+### B. TLSA records for ExpressPQDelivery   
 ```
 _443._udp.ebox-dil.0.esplab.io.         IN      TLSA    3 0 0(
                   30820f8b308205ffa00302010202146e8f36bc074d6ee3fa3a660e5e3cce
