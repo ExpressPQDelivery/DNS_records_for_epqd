@@ -1,62 +1,67 @@
 Welcome to the ExpressPQDelivery Project  
 ==============================  
-The Ebox record generator is a DNS record(TXT, TLSA) generator for ExpressPQDelivery Ebox based on OpenSSL.   
+The DNS_records_for_epqd is a DNS record(TXT, TLSA) generator for E-Box.   
+Set up a DNS resolver using bind9, and put the resolver close to a client. Then, upload the DNS records to the DNS server.  
+`example_zonefile.txt` is an instance of DNS records for diltihium2.  
+An example of E-Box for PQC algorithms is `ebox-need_for_sign.txt`, which is located in each folder.  
+We provide code to assist in 1. generating certificates, 2. creating an E-Box based on them, and dividing it into 3. TXT and 4. TLSA records.  
 
 ## Requirements  
-1. Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
+Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
 
 ## How to start(Linux Ubuntu)  
-### Generate Certificates and convert the certificate to der format.  
+## 1. Generate Certificates and convert the certificate to der format.  
 ```bash
 openssl req -x509 -new -newkey dilithium2 -keyout dil2_priv.key -out dil2_crt.pem -nodes -subj "/CN=test CA" -days 365
 openssl x509 -inform PEM -outform DER -in dil2_crt.pem -out dil2_crt.der
 ```
 
-## 1. Generate TXT records for ExpressPQDelivery  
-### generate base files for TXT records  
+## 2. Generate E-Box
+### 2.1 Generate base files for TXT records  
 you should enter the correct number of TXT and TLSA records.   
-dilithium2 = TXT 3, TLSA 4  
-dilithium3 = TXT 5, TLSA 6  
-dilithium5 = TXT 6, TLSA 7  
-falcon512  = TXT 1, TLSA 2  
-falcon1024 = TXT 2, TLSA 4  
+dilithium2: TXT 3, TLSA 4  
+dilithium3: TXT 5, TLSA 6  
+dilithium5: TXT 6, TLSA 7  
+falcon512: TXT 1, TLSA 2  
+falcon1024: TXT 2, TLSA 4  
   
 (Please refer to our paper for detail)  
 ```bash
 python3 gen_base_txt_record.py
 ```  
-You may get ebox-need_for_sign.txt and TXT_EBOX-proto.txt  
-You need to add signature value at TXT_EBOX-proto.txt to use this as Ebox TXT records.  
+You may get `ebox-need_for_sign.txt` and `TXT_EBOX-proto.txt`.  
+You need to add signature value at `TXT_EBOX-proto.txt` to use this as E-Box TXT records.  
 
-### generate signature for Ebox  
+### 2.2 Generate signature for E-Box  
 we use sha256 hash value to generate signature.  
 ```bash
 openssl sha256 dil2_crt.der
 ```  
-then, concatate the hash value at ebox-need_for_sign.txt  
+then, concatate the hash value at `ebox-need_for_sign.txt`. 
 
 ```
 Example)
 340020240923103333202509231033330(hash value)  
 ```  
 
-Then, generate signature with server's private key.  
+Generate signature with server's private key.  
 ```bash
 openssl dgst -sha256 -sign dil2_priv.key -out sign.256 ebox-need_for_sign.txt  
 ```  
-Then, encode signature in base64 format.  
+Encode signature in base64 format.  
 ```bash
 openssl base64 -in sign.256 -out base64_signature
 ```  
-And, split the signature value into an appropriate size and wrap it with " ".  
+Split the signature value into an appropriate size and wrap it with " ".
 ```bash
 python3 txt_records_generator.py
-```  
-### Basic rule for split TXT records  
-Paste the contents of base_output2.txt into TXT_EBOX-proto.txt.   
-Afterwards, each record chunk is created. The first chunk is divided into 1 chunk of 1151 bytes, and each subsequent chunk is divided into 1 chunks of 1097 bytes.  
+``` 
+Then, we get `base_output2.txt`.  
 
-## 2. Generate TLSA records for ExpressPQDelivery  
+## 3. Generate TXT records for ExpressPQDelivery  
+Paste the contents of `base_output2.txt` into `TXT_EBOX-proto.txt`.  Divide it into appropriate sizes (not exceeding 1232 bytes) and upload it to the DNS resolver according to domain name conventions. Refer to our example_zonefile.txt.
+
+## 4. Generate TLSA records for ExpressPQDelivery  
 
 We use online TLSA record generator for get TLSA record value.  
 <https://ssl-tools.net/tlsa-generator>  
