@@ -59,7 +59,7 @@ python3 txt_records_generator.py
 Then, we get `base_output2.txt`.  
 
 ## 3. Generate TXT records for ExpressPQDelivery  
-Paste the contents of `base_output2.txt` into `TXT_EBOX-proto.txt`.  Divide it into appropriate sizes (not exceeding 1232 bytes) and upload it to the DNS resolver according to domain name conventions. Refer to our example_zonefile.txt.
+Paste the contents of `base_output2.txt` into `TXT_EBOX-proto.txt`.  Divide it into appropriate sizes (not exceeding 1,232 bytes) and upload it to the DNS resolver according to domain name conventions. Refer to our example_zonefile.txt.
 
 ## 4. Generate TLSA records for ExpressPQDelivery  
 
