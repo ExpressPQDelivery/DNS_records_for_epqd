@@ -73,7 +73,7 @@ python3 tlsa_record_new.py
 ```  
 Then, you can get TLSA records appling _Optimized fragmentation_ for _EPQD_ named *TLSA_record_output.txt*.  
 
-## Example records  
+## ***Example records***  
 
 ### A. TXT records for ExpressPQDelivery  
 ```
