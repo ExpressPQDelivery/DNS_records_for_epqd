@@ -4,7 +4,7 @@ The DNS_records_for_epqd is a DNS record(TXT, TLSA) generator for E-Box.
 Set up a DNS resolver using bind9, and put the resolver close to a client. Then, upload the DNS records to the DNS server.  
 `example_zonefile.txt` is an instance of DNS records for diltihium2.  
 An example of E-Box for PQC algorithms is `ebox-need_for_sign.txt`, which is located in each folder.  
-We provide code to assist in 1. generating certificates, 2. creating an E-Box based on them, and dividing it into 3. TXT and 4. TLSA records.  
+We provide code to assist in **1. generating certificates**, **2. creating an E-Box** based on them, and dividing it into **3. TXT** and **4. TLSA** records.  
 
 ## Requirements  
 Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
