@@ -2,9 +2,17 @@ Welcome to the ExpressPQDelivery Project
 ==============================  
 The DNS_records_for_epqd is a DNS record(TXT, TLSA) generator for E-Box.   
 Set up a DNS resolver using bind9, and put the resolver close to a client. Then, upload the DNS records to the DNS server.  
-`example_zonefile.txt` is an instance of DNS records for diltihium2.  
-An example of E-Box for PQC algorithms is `ebox-need_for_sign.txt`, which is located in each folder.  
 We provide code to assist in **1. generating certificates**, **2. creating an E-Box** based on them, and dividing it into **3. TXT** and **4. TLSA** records.  
+An example of E-Box (2) is `ebox-need_for_sign.txt`, which is located in each folder.  
+An example of DNS records (3) is as follows: when using OpenSSL, refer to `example_zonefile.txt` for Dilithium2; when using wolfSSL, refer to `falcon512_dns_example_for_M4.txt` for Falcon512.
+
+## **Notes on PQC Algorithm Usage in OpenSSL and wolfSSL**  
+
+We use **OQS Provider** for PQC algorithms in OpenSSL, while in wolfSSL, we use **PQClean**. Although OQS Provider is also based on PQClean, differences in versions result in key format incompatibilities.
+
+Therefore, when using wolfSSL, we generate and manage **keys, signatures, and certificates manually**, without relying on OpenSSL commands.  
+- The following instructions apply **only when using OpenSSL**.  
+- If you want to use wolfSSL, please refer to our example file (`falcon512_dns_example_for_M4.txt`) instead.  
 
 ## Requirements  
 Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
