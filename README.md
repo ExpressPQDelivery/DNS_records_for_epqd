@@ -15,7 +15,7 @@ Therefore, when using wolfSSL, we generate and manage **keys, signatures, and ce
 - If you want to use wolfSSL, please refer to our example file (`falcon512_dns_example_for_M4.txt`) instead.  
 
 ## Requirements  
-Openssl installation including Oqsprovider. (In our work, we use v 3.2.0)  
+Openssl(we use v 3.2.0) installation including Oqsprovider (v 5.0.4-dev).
 
 ## How to start(Linux Ubuntu)  
 ## 1. Generate Certificates and convert the certificate to der format.  
