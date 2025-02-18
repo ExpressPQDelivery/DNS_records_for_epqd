@@ -1,0 +1,92 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     dns1.esplab.io. admin.esplab.io. (
+                              3         ; Serial
+                         604800         ; Refresh:
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+; NS records for dns name server
+@       IN      NS      dns1.esplab.io.
+
+esplab.io.                      IN      A       166.104.246.42
+dns1.esplab.io.                 IN      A       172.31.81.139
+ns1.esplab.io.                  IN      A       166.104.246.42
+fal512.ebox-0.esplab.io.        IN      A       166.104.246.42
+fal512.ebox-1.esplab.io.        IN      A       166.104.246.42
+
+; TXT records
+
+
+fal512.ebox-0.esplab.io.        IN      TXT     "1" "2" "0" "0" "20240704120520" "20250704120520" "3" "OWZVUTW2LND3D5qgzdhFoTp8L1ojyUFJRIQ+ZixN1+jnbVLqsTio7E92zLS5GnpgnpbNM4+KPKJHYVTdGdRudl/zPHOrh9X8eNlkiNNzGXdnr8nOJJRbdsFDsD2VdirHT2d0ikRUw8BXCCNe7sDTcgNe7rsxVlmG4mxK5y9b1NDx2Crb8ZXH" "4lc7hafPDCPGWGPIMNoV/SqNH64pGr0bh4lU6B99GTSzkYzMbqCTnaRGduzK2JQqVOLXm0ryF70QR8J1A9FrOxU0c2/wXZCYND9p3kgaQQ3HiJNkNbcbLn3hgSTK7aSVTbUdjbaVbNqYwj3BzRd3jwR05v/udaxR64gRpPBBr7rYHemQU2na" "BNG64Huk+CSzS23IHh3znd+J2teiOU+6VookWUSbYIViy9RzG1fdjjI42swMaqH2SepehqmobJmXZXn81QXfgjUYh4MNq7W+rM5JKOcpBUv1h/NjkYVZEGpcQltk32ynBpoNe5fTWRM1OKHfYhMXF5I9vLuLCet3JmYXwaDd+Ma+J2nVobLy" "cscuUZ2DLcfz4dlewnUur35jSeCEYlAz0oodPJpRDLTDzSseOK72xXCkfZltiOviZk8y8cOaxylyFj30nsfUVDXBduPoMzYke4qbJHnabHkv+VCttTbtvZw2epZqfV0ilh0CVHpnDvlOWKpEJL1y5Qwe3rDcTRGMblzmn7zWMd15VPJ5Hy7z" "0j6Nk4Fuup2SWL3qTs7xucSru06kkWt4Hs6GSxH3W1PUpXjyZUcLoOZI/7qCF2LyKW0UsSdLbs6j2XiY8mMhWcp8iAYLCuS9OslJ55B3IpTo3XoomiLcF9TBolmNuzFnelhW0Ev7nypDQkNPH2IU5TEEkPubVKU="
+;
+
+
+_443._udp.fal512.ebox-0.esplab.io.         IN      TLSA    3 0 0(
+                  308206a53082040402144e3464953cf62bbbf80c4de0ad258fe029ba9cb1
+                  300706052bce0f030130153113301106035504030c0a6f71737465737420
+                  4341301e170d3233303232353132343033365a170d323430323235313234
+                  3033365a30193117301506035504030c0e6f717374657374207365727665
+                  723082038f300706052bce0f03010382038200091d016e0565ceaea05e56
+                  8054d5d281e18f56b852ff259e057380076b796aa794f8e235523096f126
+                  1b86205a2b5727a6814cb2b262efc91a9bf9e81573098e030865da0013fa
+                  7d447bd546d9737dc60b0b11e62e3e9c7675e72535a1f6ab8302a1ba8fc5
+                  45ca386ec0178d8f44f68cd948e49dd5e3c01c16189c68aaa91025b12055
+                  c125e8b40669c79d1e7b9582af25ce58532fbcd6b6442ec120416d886004
+                  22bcf60d77e015ec86aec0f26a18674a284565d8e0fa00b9e43663c31d15
+                  adcd08df2f3890522219e8275f10504bf0b34d68b0f99b57bb52035ac02c
+                  9adaa1bc4abede152be68da31290a56540597d5d87b228c9d605d4d5123d
+                  61695f2d6e79eae015a9fefb80de830e0845efbb6aafe8420c46f4f7d92d
+                  61b242142263845b918542d22bec3daaacc6d028c44226ca82bdec0f2115
+                  95c1ae92ca93b5bb580ec00c9cc26f25b0926f83f58ab59027918312d19a
+                  d0671458605570369cfe9392c2e1fb4062b6c408b692d90083e12272d35b
+                  9f25086075c902f1137448652e832197c0e616a400829b3a5808214c7827
+                  25f62b6896c0086e0ef16fad8f9d35d0776713ab212a1c58844e1099410f
+                  844792ed63f18e98f8ca6f66f5667867ae2a586c8c48a043cf4d1aefc6b4
+                  c7e553f1aca43a8bd53aa506e47668118f71d5562b20c52c4e6a390e9a03
+                  4daceec64621bb73603b4844999579f0d2c1cd8e4a6115c87969983c67bc
+                  60a716e4d02fdc4ae89642692d1a3346b8583c8dbc8d20afec435fb1c6f7
+                  471e9a828081a7a62cce584e8b870894296674038adf4b0c451c9dcadf53
+                  0a00ea51fb7c506f53e0db71f1580a5bb07fbad507a974dc9b4a28db74a2
+                  e12e656205ec863c71c9df54b24d76d4c3b899fe505d99f32c1b20b3852e
+                  541fe52f5cc1ae33a4c737aa598e9a7ccd27816afe016ce9304678bce060
+                  99591f626f61e76a593f50755ab6182ea999e960ee8e5d08fac8360cef70
+                  88c963e45eedcb57ce59a72797cd66d9f0c559698c920a86f00782dc369e
+                  4f80a602b25d203c28a9ab3db070406604c3bb18001ff4286d529f7aaf01
+                  919ac50bde89c742931eaf4edaa6844302936841a1fbc78d61ed5450e24e
+                  82578e44b9af1c612961e5e775ce46478c3c751112f59c7ecbc3de15f10d
+                  aab41635c10c5c08efb96e0670b8f6ab20a711f97072e125831137b5359c
+                  98b12c5e1a9e923293dd64ab9ce1e953c94f752915b78c9deb2c51ca4417
+                  ce430a1a51058e8f1465ad67b0c66c71300706052bce0f03010382029000
+                  39a2943f7aaf87e6f36ec2e186518dc4f083f6a28ca724e2c94f33b17f96
+                  ab2a9315312b0c802010
+)
+
+
+_443._udp.fal512.ebox-1.esplab.io.         IN      TLSA    3 0 0(
+                  c9e5bdea1702319db745d5c85d2e9c77e61bb1c343b4b976532ac2401994
+                  191c9db02d549afb8b9f737171e6b4d8330e5c437698e350238b17932df1
+                  869a43e786215eef36349e76187299608afd51ecd4c4e770690bde2b3851
+                  44871f099421ff08c3cd814cb4d17bea1c736f69ccd2bb0b871d06fbbda3
+                  6f5b87292022d88447ed42c943de1c628563e15d78624fc7e068d34b2a42
+                  3a6ac42d0967e2196872969866f18efb5eaaf8b671d14d8695ae8a59aaba
+                  faeb8ee55b7cba9f65ee0f1b55e5b06e469738c5f49635f317836ac7d5ee
+                  dce89c7581838ac8ad75682e59bd35963e44252897239258d37c4eaf1e08
+                  7c89ab421812f11951d891cfd52eb20d7f91ccc121ea8a691481a7fe8866
+                  62b661b225849afc9add212cd0d03dd724235273cac318c2b1659a329470
+                  83088d2be481635efa5e36a260d2c979fcbf3b273cc6e7900a928ac2895f
+                  61b676b87a83ad6e637776fe33a997b0f7ca84c70d62a03dbdcce312c1b7
+                  d269262fa15a9ec6f64c6defd4dc3e93309d3d5a14aec149d977fb721871
+                  827c9e4de98ac021861457dd621f9a7b511ef290c86ade1485dc8d3a7512
+                  b2c0134c1e8b8282ff9313412f95bcb4dbf41bb96d37d92a3af94a6f143a
+                  2214e8a3ee5c38c4df4f1ac176e978a9ee1c532f01e23568fe336ecdcf31
+                  4a1978ff448f95ceb7e87c60eec46b4752eb663eb36d62e2bb2fc88b5baf
+                  a8b6cead1e46ceda56fcf9535ce6dddb14e0816489fc192ea945dab61d24
+                  2a493ed3b708dc41fff61f45a71ec38aeb5b9440bfea5e05d09b6b52895c
+                  109e62f626677449324dae7f2f252695fc42075c4c3c11389968d5905699
+                  507bf2781fdde55a5c1b78827ab440
+)
+
+                                                                                                                  1,1           Top
